@@ -1,0 +1,422 @@
+package src.com.training.selenium;
+
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.xerces.impl.xs.identity.Field.XPath;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class AssignmentTest {
+
+	private static WebDriver driver;
+	private static String baseUrl;
+	private boolean acceptNextAlert = true;
+	private StringBuffer verificationErrors = new StringBuffer();
+	String[] params;
+	
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+	
+		//System.setProperty("webdriver.chrome.driver", "C:\\softwares\\chromedriver.exe");
+		//WebDriver driver = new ChromeDriver();
+		
+		System.setProperty("webdriver.gecko.driver", "C:\\softwares\\geckodriver.exe");
+		WebDriver driver = new FirefoxDriver();
+
+		//Go to Mercury Internet website 
+		//driver.get("https://the-internet.herokuapp.com/windows");
+		driver.get("http://newtours.demoaut.com/");
+		
+		// Launch the URL
+		//driver.get("https://www.amazon.nl/");
+		
+		//Get the title 
+		String title = driver.getTitle();
+		System.out.println(title);
+
+		login();
+				
+//		//Enter User names
+//		driver.findElement(By.name("userName"));
+//		
+//		//check if the element User name is displayed
+//		System.out.println("Username is displayed: " + driver.findElement(By.name("userName")).isDisplayed());
+//						
+//		
+//		//enter the user id
+//		driver.findElement(By.name("userName")).sendKeys("mercury");
+//	
+//		
+//		//enter the password
+//		driver.findElement(By.name("password")).sendKeys("mercury");
+//		
+//		//click on sign In
+//		driver.findElement(By.name("login")).click();
+//		
+//		Thread.sleep(1000);
+			
+		
+		System.out.println("=============Assertion Login1================");
+		//Get the title 
+		String titleLogin = driver.getTitle();
+		System.out.println(titleLogin);	
+		
+		if (titleLogin.equals("Find a Flight: Mercury Tours:")) 
+				{
+					System.out.println("LoggedIn Title is correct: " +  titleLogin);
+					//System.exit(1);
+					//System.out.print("Should not be printed");
+					
+				}
+			
+		else
+				{
+					System.out.println("LoggedIn Title is NOT correct " +  titleLogin);
+					//driver.close();
+					
+				}
+		Thread.sleep(1000);
+		System.out.println("=============Assertion Login2=================");	
+		
+		
+		boolean passengersId = driver.findElement(By.name("passCount")).isDisplayed();
+		if (passengersId)
+			System.out.println("Logged in Flight Finder " +  passengersId);
+		else
+			System.out.println("Logged in Flight Finder " +  passengersId);
+		
+		System.out.println("=============Assertion Login3=================");
+		//String actual = driver.getTitle();
+        String expected = "Find a Flight: Mercury Tours:";
+        String actual = driver.getTitle();
+        //strvalue.getText();
+        System.out.println(actual);
+
+    if(expected.equals(actual)){
+        System.out.println("Pass");
+    }
+        else {
+            System.out.println("Fail");
+        }	
+		
+    System.out.println("=============================");
+		
+		System.out.println(driver.getCurrentUrl());
+
+		System.out.println("=============================");
+		
+		
+		try {
+			//boolean imageDisplayed = driver.findElement(By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[1]/td/img")).isDisplayed();
+			boolean imageDisplayed = driver.findElement(By.xpath("//*[@src='/images/masts/mast_flightfinder.gif']")).isDisplayed();
+			boolean PassengersDisplayed = driver.findElement(By.xpath("//*[@name='passCount']")).isDisplayed();
+				
+			System.out.println("Image Displayed: " +  imageDisplayed);
+			System.out.println("Image Displayed: " +  PassengersDisplayed);
+			
+			//Select Passengers
+			driver.findElement(By.xpath("//*[@name='passCount']")).sendKeys("2");
+		}
+		catch(Exception e){
+			System.out.println("Element by xpath not found");
+		}
+		//String testString = null;
+		
+		
+		//Select Type
+		driver.findElement(By.xpath("//*[@value='oneway']")).click();
+
+		
+		//Select Departing From
+		WebElement fromPort = driver.findElement(By.name("fromPort"));
+		Select selDropdown = new Select(fromPort);
+		selDropdown.selectByVisibleText("Zurich");
+		
+		// To get the selected option
+		System.out.println("Selected By visible text: " + selDropdown.getFirstSelectedOption().getText());
+		//selDropdown.selectByValue("2");
+		
+		
+		//Selecting On
+		WebElement fromMonth = driver.findElement(By.name("fromMonth"));
+		Select selfromMonth = new Select(fromMonth);
+		selfromMonth.selectByVisibleText("September");
+		
+		WebElement fromDay = driver.findElement(By.name("fromDay"));
+		Select selfromDay = new Select(fromDay);
+		selfromDay.selectByVisibleText("12");
+		
+		//Selecting Arriving In
+		WebElement toPort = driver.findElement(By.name("toPort"));
+		Select seltoPort = new Select(toPort);
+		seltoPort.selectByVisibleText("Paris");
+		
+	
+		//Selecting Returning		
+		WebElement toMonth = driver.findElement(By.name("toMonth"));
+		Select seltoMonth = new Select(toMonth);
+		seltoMonth.selectByVisibleText("December");
+
+		WebElement toDay = driver.findElement(By.name("toDay"));
+		Select seltoDay = new Select(toDay);
+		seltoDay.selectByVisibleText("18");
+		
+		
+		//Selecting Preferences
+		driver.findElement(By.xpath("//*[@value='Business']")).click();
+		
+		//Selecting Airline
+		WebElement airline = driver.findElement(By.name("airline"));
+		Select selAirline = new Select(airline);
+		selAirline.selectByVisibleText("Pangea Airlines");
+		
+		
+		//click on Continue
+		driver.findElement(By.name("findFlights")).click();
+		
+		Thread.sleep(100);
+		
+		//check if you are on the Select Flight page
+		//String actual = driver.getTitle();
+        String expectedSelectFlight = "Select a Flight: Mercury Tours";
+        String actualSelectFlight = driver.getTitle();
+        //strvalue.getText();
+        System.out.println(actualSelectFlight);
+
+    if(expectedSelectFlight.equals(actualSelectFlight)){
+        System.out.println("Passed: Select a Flight Mercury Tours page is displayed");
+    }
+        else {
+            System.out.println("Failed: Select a Flight Mercury Tours page is not displayed");
+        }	
+		
+    
+        //select Depart ticket
+		WebElement checkPopupDepart = driver.findElement(By.xpath("//*[@value='Pangea Airlines$362$274$9:17']"));
+		checkPopupDepart.click();
+
+        //select Return ticket
+		WebElement checkPopupReturn= driver.findElement(By.xpath("//*[@value='Pangea Airlines$632$282$16:37']"));
+		checkPopupReturn.click();
+
+		//click on Continue
+		driver.findElement(By.name("reserveFlights")).click();				
+		
+		Thread.sleep(1000);
+		
+		
+        String expectedBookFlight = "Book a Flight: Mercury Tours";
+        String actualBookFlight = driver.getTitle();
+        //strvalue.getText();
+        System.out.println(actualBookFlight);
+
+    if(expectedBookFlight.equals(actualBookFlight)){
+        System.out.println("Passed: Book a Flight Mercury Tours page is displayed");
+    }
+        else {
+            System.out.println("Failed: Book a Flight Mercury Tours page is not displayed");
+        }	
+		
+	
+    //enter 1st Passenger firtName + Surname + Meal
+    driver.findElement(By.name("passFirst0")).sendKeys("Frans");
+    
+    driver.findElement(By.name("passLast0")).sendKeys("Bauer");
+    
+    driver.findElement(By.xpath("//*[@name='pass.1.meal']")).sendKeys("Vegetarian");
+    
+     
+    //enter 2nd Passenger firstname+ Surname + Meal
+    driver.findElement(By.name("passFirst1")).sendKeys("Patty");
+    
+    driver.findElement(By.name("passLast1")).sendKeys("Brard");
+    
+    driver.findElement(By.xpath("//*[@name='pass.0.meal']")).sendKeys("Bland");
+       
+    Thread.sleep(2000);
+    
+    //Enter CreditcardDetails
+    driver.findElement(By.name("creditCard")).sendKeys("Visa");
+    
+    driver.findElement(By.name("creditnumber")).sendKeys("231231231231");
+		
+	//Enter Billing address
+    driver.findElement(By.name("billCountry")).sendKeys("NETHERLANDS");	
+    
+    driver.findElement(By.name("billAddress1")).clear();
+    driver.findElement(By.name("billAddress1")).sendKeys("Keizergracht 1");	
+    
+    driver.findElement(By.name("billCity")).clear();	
+    driver.findElement(By.name("billCity")).sendKeys("Amsterdam");
+    
+    driver.findElement(By.name("billState")).clear();    
+    driver.findElement(By.name("billState")).sendKeys("NH");	
+
+    driver.findElement(By.name("billZip")).clear();   
+    driver.findElement(By.name("billZip")).sendKeys("1010AB");	
+    
+    driver.findElement(By.name("ticketLess")).isSelected();
+    
+    //click on Secure Purchase
+    driver.findElement(By.name("buyFlights")).isSelected();
+    driver.findElement(By.name("buyFlights")).click();
+    
+    Thread.sleep(1000);
+    
+	
+    //printer image displayed on the page
+    if (driver.findElement(By.xpath("//*[@src='/images/printit.gif']")).isDisplayed() )
+   		{
+    		System.out.println("Passed: Printer Image is displayed");
+   		}
+    else 
+    	{
+        	System.out.println("Failed: Printer Image is NOT displayed");
+    	}	
+    
+      boolean isVisible = (driver.findElement(By.xpath("//*[@src='/images/printit.gif']")).isDisplayed() );
+      System.out.println("is Printer Visible:" + isVisible );
+      
+      if( isVisible == true){
+    	  System.out.println("is Printer Visible in if statement:" + isVisible );  
+      }
+    
+    String expectedFlightConfirmation= "Flight Confirmation: Mercury Tours";
+    String actualFlightConfirmation = driver.getTitle();
+    //strvalue.getText();
+    System.out.println(actualFlightConfirmation);
+
+    if(expectedFlightConfirmation.equals(actualFlightConfirmation)){
+    	System.out.println("Passed: Flight Confirmation page is displayed");
+    }
+    else {
+        System.out.println("Failed: Flight Confirmation page is not displayed");
+    }	
+    
+    
+    WebElement contactText = driver.findElement(By.linkText("CONTACT"));
+    contactText.click();
+    
+    Thread.sleep(1000);
+    driver.findElement(By.xpath("//*[@src='/images/forms/home.gif']")).click();
+    
+    Thread.sleep(1000);
+
+    
+    //driver.get("http://www.google.com");
+    //driver.navigate().to("https://the-internet.herokuapp.com/windows");
+
+    int n = driver.getWindowHandles().size();
+    System.out.println(n);
+    
+    
+    String url="https://the-internet.herokuapp.com";
+    ((JavascriptExecutor) driver).executeScript("window.open(arguments[0])", url);
+    driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+    
+    Thread.sleep(2000);
+    Set<String> windows = driver.getWindowHandles();
+
+	Object[] handles = windows.toArray();
+
+	String firstwindow = (String)handles[0];
+
+
+	String secondWindow = (String) handles[1];
+
+	
+	//Go to First window
+	Thread.sleep(1000);
+	driver.switchTo().window(firstwindow);
+	System.out.println(driver.getTitle());
+
+	System.out.println(driver.getCurrentUrl());
+	
+	System.out.println("=============================");
+			
+	//Go to Second window
+	Thread.sleep(1000);
+	driver.switchTo().window(secondWindow);
+	System.out.println(driver.getTitle());
+
+	System.out.println(driver.getCurrentUrl());
+     
+	driver.close();
+	System.out.println("=============================");
+    
+    
+    // driver.navigate().back();
+    //driver.quit();
+    
+    
+	}
+	
+
+
+
+
+
+	private static void login() throws InterruptedException{
+	//Enter User names
+	driver.findElement(By.name("userName"));
+	
+	//check if the element User name is displayed
+	System.out.println("Username is displayed: " + driver.findElement(By.name("userName")).isDisplayed());
+					
+	
+	//enter the user id
+	driver.findElement(By.name("userName")).sendKeys("mercury");
+
+	
+	//enter the password
+	driver.findElement(By.name("password")).sendKeys("mercury");
+	
+	//click on sign In
+	driver.findElement(By.name("login")).click();
+	
+	Thread.sleep(1000);
+	
+	
+   // driver.findElement(By.id("p")).clear();
+   // driver.findElement(By.id("p")).sendKeys(params[1]);
+   // driver.findElement(By.id("u")).clear();
+   // driver.findElement(By.id("u")).sendKeys(params[0]);
+   // driver.findElement(By.id("submit_button")).click();
+}
+
+}
+		
+		
+//WebDriver driver = new FirefoxDriver();
+//driver.navigate().to("Url");
+
+//WebElement strvalue = driver.findElement(By.xpath("  "));
+//String expected = "Text to compare";
+//String actual = strvalue.getText();
+//System.out.println(actual);
+
+//if(expected.equals(actual)){
+//System.out.println("Pass");
+//}
+//else {
+//    System.out.println("Fail");
+//}
+
+
+
+//
+//	  driver.navigate().to("http://only-testing-blog.blogspot.in/2014/01/textbox.html");
+
+	  //To navigate back (Same as clicking on browser back button)
+//	  driver.navigate().back();
+
+	  //To navigate forward (Same as clicking on browser forward button)
+//	  driver.navigate().forward();
